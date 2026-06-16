@@ -36,6 +36,8 @@ class FakeTranslationProvider implements TranslationProvider {
       sourceLanguage: sourceLanguage ?? 'auto',
       targetLanguage: targetLanguage,
       providerId: id,
+      alternatives: const [],
+      contextNotes: const [],
     );
   }
 }

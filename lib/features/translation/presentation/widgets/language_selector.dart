@@ -10,12 +10,10 @@ const supportedLanguageNames = <String, String>{
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({
     super.key,
-    required this.label,
     required this.value,
     required this.onChanged,
   });
 
-  final String label;
   final String value;
   final ValueChanged<String> onChanged;
 
@@ -24,69 +22,69 @@ class LanguageSelector extends StatelessWidget {
     final selectedValue = supportedLanguageNames.containsKey(value) ? value : 'ru';
 
     return PopupMenuButton<String>(
-      tooltip: label,
+      tooltip: null,
       initialValue: selectedValue,
-      color: MacTranslatorKit.glassSurface,
+      color: MacTranslatorKit.glassSurfaceSoft,
       surfaceTintColor: Colors.transparent,
+      menuPadding: const EdgeInsets.all(6),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(MacTranslatorKit.radiusControl),
-        side: const BorderSide(color: MacTranslatorKit.glassEdgeMuted),
+        side: const BorderSide(color: MacTranslatorKit.hairline),
       ),
       onSelected: onChanged,
       itemBuilder: (context) => [
         for (final entry in supportedLanguageNames.entries)
           PopupMenuItem(
             value: entry.key,
-            child: Text('${entry.value} (${entry.key.toUpperCase()})'),
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+            labelTextStyle: WidgetStateProperty.resolveWith((states) {
+              return TextStyle(
+                color: states.contains(WidgetState.disabled)
+                    ? MacTranslatorKit.mutedInk
+                    : MacTranslatorKit.ink,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              );
+            }),
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: entry.key == selectedValue
+                    ? MacTranslatorKit.glassSurfaceBarely
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(entry.key.toUpperCase()),
+            ),
           ),
       ],
       child: Container(
-        height: 42,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        height: 46,
+        padding: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
           color: MacTranslatorKit.glassInset,
           borderRadius: BorderRadius.circular(MacTranslatorKit.radiusControl),
-          border: Border.all(color: MacTranslatorKit.glassEdgeMuted, width: 0.8),
-          boxShadow: const [
-            BoxShadow(
-              color: MacTranslatorKit.glassEdgeMuted,
-              blurRadius: 1,
-              offset: Offset(0, 1),
-            ),
-          ],
+          border: Border.all(color: MacTranslatorKit.hairline, width: 0.8),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: MacTranslatorKit.secondaryInk,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  selectedValue.toUpperCase(),
-                  style: const TextStyle(
-                    color: MacTranslatorKit.ink,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    height: 1,
-                  ),
-                ),
-              ],
+            Text(
+              selectedValue.toUpperCase(),
+              style: const TextStyle(
+                color: MacTranslatorKit.ink,
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+                height: 1,
+              ),
             ),
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: MacTranslatorKit.graphite,
-              size: 18,
+              color: MacTranslatorKit.secondaryInk,
+              size: 20,
             ),
           ],
         ),

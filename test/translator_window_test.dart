@@ -22,6 +22,8 @@ class FakeTranslationService implements TranslationService {
       sourceLanguage: sourceLanguage ?? 'auto',
       targetLanguage: targetLanguage,
       providerId: providerId,
+      alternatives: const ['variant one', 'variant two'],
+      contextNotes: const ['short usage note'],
     );
   }
 }
@@ -45,11 +47,38 @@ void main() {
       ),
     );
 
-    expect(find.text('From'), findsOneWidget);
-    expect(find.text('To'), findsOneWidget);
     expect(find.text('RU'), findsOneWidget);
     expect(find.text('EN'), findsOneWidget);
     expect(find.byIcon(Icons.swap_horiz_rounded), findsOneWidget);
-    expect(find.text('Translation appears here'), findsOneWidget);
+    expect(find.text('Translation appears here'), findsNothing);
+  });
+
+  testWidgets('renders alternative translations and context notes', (tester) async {
+    final controller = TranslatorController(
+      translationService: FakeTranslationService(),
+      initialSettings: const AppSettings(),
+      debounceDuration: const Duration(milliseconds: 1),
+    );
+    addTearDown(controller.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: TranslatorWindow(
+          controller: controller,
+          settingsService: SettingsService(),
+          windowMode: ValueNotifier(TranslatorWindowMode.translate),
+          onHideWindow: () async {},
+        ),
+      ),
+    );
+
+    await tester.enterText(find.byType(TextField), 'hello');
+    await tester.pump(const Duration(milliseconds: 20));
+    await tester.pump();
+
+    expect(find.text('HELLO'), findsOneWidget);
+    expect(find.text('variant one'), findsOneWidget);
+    expect(find.text('variant two'), findsOneWidget);
+    expect(find.text('short usage note'), findsOneWidget);
   });
 }

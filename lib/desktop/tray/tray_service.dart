@@ -20,7 +20,9 @@ class TrayService with TrayListener {
     trayManager.addListener(this);
 
     await trayManager.setIcon(
-      'macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png',
+      'assets/tray_icon.png',
+      isTemplate: true,
+      iconSize: 18,
     );
     await trayManager.setToolTip('Menu Translator');
     await trayManager.setContextMenu(

@@ -5,9 +5,9 @@ class WindowService with WindowListener {
   Future<void> initialize() async {
     windowManager.addListener(this);
     const windowOptions = WindowOptions(
-      size: Size(500, 260),
+      size: Size(500, 340),
       minimumSize: Size(480, 240),
-      maximumSize: Size(560, 340),
+      maximumSize: Size(560, 460),
       center: true,
       alwaysOnTop: true,
       skipTaskbar: true,
@@ -20,7 +20,7 @@ class WindowService with WindowListener {
     await windowManager.setAsFrameless();
     await windowManager.setBackgroundColor(Colors.transparent);
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.hide();
+      await showTranslator();
     });
   }
 

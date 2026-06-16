@@ -26,18 +26,13 @@ class TranslationInput extends StatelessWidget {
       cursorColor: MacTranslatorKit.graphite,
       style: const TextStyle(
         color: MacTranslatorKit.ink,
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
-        height: 1.18,
+        fontSize: 21,
+        fontWeight: FontWeight.w600,
+        height: 1.2,
       ),
       decoration: InputDecoration(
-        hintText: 'Type a word or phrase...',
-        hintStyle: const TextStyle(
-          color: MacTranslatorKit.mutedInk,
-          fontWeight: FontWeight.w400,
-        ),
         filled: true,
-        fillColor: MacTranslatorKit.glassInset,
+        fillColor: MacTranslatorKit.glassInsetStrong,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(MacTranslatorKit.radiusField),
           borderSide: BorderSide.none,
@@ -45,17 +40,17 @@ class TranslationInput extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(MacTranslatorKit.radiusField),
           borderSide: const BorderSide(
-            color: MacTranslatorKit.glassEdgeMuted,
+            color: MacTranslatorKit.hairline,
             width: 0.8,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(MacTranslatorKit.radiusField),
-          borderSide: const BorderSide(color: MacTranslatorKit.graphite),
+          borderSide: const BorderSide(color: MacTranslatorKit.accent),
         ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 13,
+          horizontal: 17,
+          vertical: 15,
         ),
       ),
       onChanged: (_) => onChanged(),

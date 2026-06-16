@@ -5,6 +5,10 @@ class TranslationResult {
     required this.sourceLanguage,
     required this.targetLanguage,
     required this.providerId,
+    this.alternatives = const [],
+    this.contextNotes = const [],
+    this.partOfSpeech,
+    this.tone,
   });
 
   final String originalText;
@@ -12,4 +16,8 @@ class TranslationResult {
   final String sourceLanguage;
   final String targetLanguage;
   final String providerId;
+  final List<String> alternatives;
+  final List<String> contextNotes;
+  final String? partOfSpeech;
+  final String? tone;
 }

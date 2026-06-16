@@ -63,6 +63,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/tray_icon.png
     - macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

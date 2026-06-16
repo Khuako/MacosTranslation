@@ -5,6 +5,7 @@ import '../desktop/tray/tray_service.dart';
 import '../desktop/window/window_service.dart';
 import '../features/settings/settings_service.dart';
 import '../features/translation/data/providers/google_translator_provider.dart';
+import '../features/translation/data/providers/openrouter_translation_provider.dart';
 import '../features/translation/data/repositories/translation_repository_impl.dart';
 import '../features/translation/domain/services/translation_service.dart';
 import '../features/translation/presentation/translator_controller.dart';
@@ -39,12 +40,25 @@ Future<AppDependencies> bootstrap() async {
 
   final settingsService = SettingsService();
   final settings = await settingsService.load();
+  final openRouterConfig = await OpenRouterConfig.load();
   final provider = GoogleTranslatorProvider();
-  final repository = TranslationRepositoryImpl(providers: [provider]);
+  final openRouterProvider = OpenRouterTranslationProvider(
+    config: openRouterConfig,
+  );
+  final repository = TranslationRepositoryImpl(
+    providers: [
+      openRouterProvider,
+      provider,
+    ],
+  );
   final translationService = TranslationService(repository: repository);
+  final initialSettings =
+      settings.selectedProviderId == provider.id && openRouterConfig.hasApiKey
+          ? settings.copyWith(selectedProviderId: openRouterProvider.id)
+          : settings;
   final translatorController = TranslatorController(
     translationService: translationService,
-    initialSettings: settings,
+    initialSettings: initialSettings,
   );
   final windowService = WindowService();
 

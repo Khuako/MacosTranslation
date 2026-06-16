@@ -25,8 +25,21 @@ flutter run -d macos
 ## Translation providers
 
 The UI depends on `TranslationService`, which uses `TranslationRepository` and
-the `TranslationProvider` interface. The first provider is
-`GoogleTranslatorProvider`, backed by the `translator` package.
+the `TranslationProvider` interface.
+
+OpenRouter can be used for contextual translations with alternatives and short
+usage notes. Create a local `.env` file from `.env.example`:
+
+```sh
+OPENROUTER_API_KEY=...
+OPENROUTER_MODEL=qwen/qwen3.7-plus
+OPENROUTER_MAX_TOKENS=350
+OPENROUTER_TEMPERATURE=0.2
+```
+
+When `OPENROUTER_API_KEY` is present, the app uses OpenRouter by default. Without
+it, the app falls back to `GoogleTranslatorProvider`, backed by the `translator`
+package.
 
 To replace the backend later, add another `TranslationProvider` implementation
 and register it in `lib/app/bootstrap.dart`; the UI does not need to import or

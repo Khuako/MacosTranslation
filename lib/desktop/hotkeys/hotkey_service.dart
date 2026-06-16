@@ -17,7 +17,7 @@ class HotkeyService {
 
     await hotKeyManager.register(
       hotKey,
-      keyDownHandler: (_) {
+      keyUpHandler: (_) {
         onPressed();
       },
     );

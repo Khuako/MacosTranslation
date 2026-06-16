@@ -25,6 +25,8 @@ class FakeTranslationService implements TranslationService {
       sourceLanguage: sourceLanguage ?? 'auto',
       targetLanguage: targetLanguage,
       providerId: providerId,
+      alternatives: const [],
+      contextNotes: const [],
     );
   }
 }
